@@ -1,20 +1,25 @@
 import { create } from 'zustand'
 
 interface Product {
-    name: string
+    title: string,
+    id: number,
+    description: string,
+    price: number
 }
 
 interface CartStore {
-    products: Product[]
+    products: Product[],
+    fetchProducts: () => Promise<void>
 }
 
-const getProducts = async () => {
-    const response = await fetch('https://dummyjson.com/products')
-    const data = await response.json()
-    return data
-}
+
 export const useCartStore = create<CartStore>((set) => (
     {
-        products: getProducts()
+        products: [],
+        fetchProducts: async () => {
+            const response = await fetch('https://dummyjson.com/products')
+            const data = await response.json()
+            set({ products: data.products })
+        }
     }
 ))

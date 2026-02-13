@@ -9,9 +9,15 @@ import {
     CardTitle,
 } from "./ui/card"
 
-export function CardImage() {
+interface CardPropsContent {
+    price: number,
+    description: string,
+    title: string
+}
+
+export function CardImage({ price, description, title }: CardPropsContent) {
     return (
-        <Card className="relative mx-auto w-full max-w-sm pt-0">
+        <Card className="relative mx-auto w-full max-w-sm pt-0" >
             <div className="absolute inset-0 z-30 aspect-video bg-black/35" />
             <img
                 src="https://avatar.vercel.sh/shadcn1"
@@ -20,12 +26,11 @@ export function CardImage() {
             />
             <CardHeader>
                 <CardAction>
-                    <Badge variant="secondary">$20.00</Badge>
+                    <Badge variant="secondary">${price}</Badge>
                 </CardAction>
-                <CardTitle>Design systems meetup</CardTitle>
+                <CardTitle>{title}</CardTitle>
                 <CardDescription>
-                    A practical talk on component APIs, accessibility, and shipping
-                    faster.
+                    {description}
                 </CardDescription>
             </CardHeader>
             <CardFooter>

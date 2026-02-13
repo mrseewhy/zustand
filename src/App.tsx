@@ -1,15 +1,28 @@
 import { CardImage } from "./components/Cards"
+import { useCartStore } from "./store/CartStore"
+import { useEffect } from "react"
 
 
 const App = () => {
-  useEffec
+
+  const { products, fetchProducts } = useCartStore()
+
+
+  useEffect(() => {
+    fetchProducts()
+  }, [fetchProducts])
 
 
   return (
-    <div className="w-5/6 mx-auto grid place-items-center grid-cols-2 gap-4">
-      <CardImage />
-      <CardImage />
-      <CardImage />
+    <div className="w-5/6 mx-auto grid place-items-center grid-cols-2 gap-4 my-12">
+
+      {!products && <p className="text-4xl">Loading ...</p>}
+      {products && products.map((product, index) => {
+        return (
+          <CardImage key={product.id.toString() + index} title={product.title} description={product.description} price={product.price} />
+        )
+      })}
+
     </div>
   )
 }
