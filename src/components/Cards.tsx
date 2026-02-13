@@ -8,14 +8,21 @@ import {
     CardHeader,
     CardTitle,
 } from "./ui/card"
+import { useProcessCartStore } from "../store/ProcessCartStore"
+
+
 
 interface CardPropsContent {
     price: number,
     description: string,
-    title: string
+    title: string,
+    id: number
 }
 
-export function CardImage({ price, description, title }: CardPropsContent) {
+export function CardImage({ product }: CardPropsContent) {
+    const { addToCart, cart } = useProcessCartStore()
+    const cartItem = cart.find((item) => (product.id === item.id))
+    const quantity = cartItem ? cartItem.quantity : 0
     return (
         <Card className="relative mx-auto w-full max-w-sm pt-0" >
             <div className="absolute inset-0 z-30 aspect-video bg-black/35" />
@@ -26,16 +33,24 @@ export function CardImage({ price, description, title }: CardPropsContent) {
             />
             <CardHeader>
                 <CardAction>
-                    <Badge variant="secondary">${price}</Badge>
+                    <Badge variant="secondary">${product.price}</Badge>
                 </CardAction>
-                <CardTitle>{title}</CardTitle>
+                <CardTitle>{product.title}</CardTitle>
                 <CardDescription>
-                    {description}
+                    {product.description}
                 </CardDescription>
             </CardHeader>
             <CardFooter>
-                <Button className="w-full">Add To Cart</Button>
+                {quantity === 0 ? (
+                    <Button onClick={() => addToCart(product)} className="w-full">Add To Cart</Button>
+                ) : (
+                    <div className="flex flex-row gap-4 items-center">
+                        <Button>-</Button>
+                        <span>{quantity}</span>
+                        <Button>+</Button>
+                    </div>
+                )}
             </CardFooter>
-        </Card>
+        </Card >
     )
 }

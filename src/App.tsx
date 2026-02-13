@@ -1,11 +1,13 @@
 import { CardImage } from "./components/Cards"
 import { useCartStore } from "./store/CartStore"
 import { useEffect } from "react"
+import { useProcessCartStore } from "./store/ProcessCartStore"
 
 
 const App = () => {
 
   const { products, fetchProducts } = useCartStore()
+  const { addToCart } = useProcessCartStore()
 
 
   useEffect(() => {
@@ -19,7 +21,7 @@ const App = () => {
       {!products && <p className="text-4xl">Loading ...</p>}
       {products && products.map((product, index) => {
         return (
-          <CardImage key={product.id.toString() + index} title={product.title} description={product.description} price={product.price} />
+          <CardImage key={product.id.toString() + index} product={product} />
         )
       })}
 

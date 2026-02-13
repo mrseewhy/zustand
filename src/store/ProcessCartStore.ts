@@ -7,12 +7,24 @@ interface Product {
     price: number
 }
 
+interface CartItem extends Product {
+    quantity: number
+}
 interface CartState {
-    cart: Product[]
+    cart: CartItem[]
+    addToCart: (product: Product) => void,
+    quantity: number
+
 }
 
-const useProcessCartStore = create<CartState>((set) => {
+
+
+
+
+export const useProcessCartStore = create<CartState>((set) => {
     return ({
-        cart: []
+        cart: [],
+        addToCart: (product) => set((state) => ({ cart: [...state.cart, { ...product, quantity: 1 }] })),
+        quantity: 1
     })
 })
