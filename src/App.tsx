@@ -7,7 +7,6 @@ import { useProcessCartStore } from "./store/ProcessCartStore"
 const App = () => {
 
   const { products, fetchProducts } = useCartStore()
-  const { addToCart } = useProcessCartStore()
 
 
   useEffect(() => {

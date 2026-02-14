@@ -20,7 +20,7 @@ interface CardPropsContent {
 }
 
 export function CardImage({ product }: CardPropsContent) {
-    const { addToCart, cart } = useProcessCartStore()
+    const { addToCart, cart, dec, inc } = useProcessCartStore()
     const cartItem = cart.find((item) => (product.id === item.id))
     const quantity = cartItem ? cartItem.quantity : 0
     return (
@@ -45,9 +45,9 @@ export function CardImage({ product }: CardPropsContent) {
                     <Button onClick={() => addToCart(product)} className="w-full">Add To Cart</Button>
                 ) : (
                     <div className="flex flex-row gap-4 items-center">
-                        <Button>-</Button>
+                        <Button onClick={() => dec(product.id)} >-</Button>
                         <span>{quantity}</span>
-                        <Button>+</Button>
+                        <Button onClick={() => inc(product.id)} >+</Button>
                     </div>
                 )}
             </CardFooter>
